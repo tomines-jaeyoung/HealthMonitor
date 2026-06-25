@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    센서 확인 레이아웃
+    기술스택: LinearLayout, TableLayout (체크리스트 정렬), CheckBox, Button, TextView
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0D1B3E"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <!-- 단계 표시 -->
+    <TextView
+        android:id="@+id/tvSensorStep"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:text="2 / 4"
+        android:textColor="#90CAF9"
+        android:textSize="14sp"
+        android:layout_marginBottom="8dp" />
+
+    <!-- 제목 -->
+    <TextView
+        android:id="@+id/tvSensorTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="센서 착용 확인"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:id="@+id/tvSensorSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="측정 전 모든 항목을 확인해주세요"
+        android:textColor="#90CAF9"
+        android:textSize="14sp"
+        android:layout_marginBottom="24dp" />
+
+    <!-- 센서 감지됨 상태 -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:background="#1A237E"
+        android:padding="16dp"
+        android:layout_marginBottom="20dp">
+
+        <ImageView
+            android:id="@+id/ivSensorIcon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:src="@android:drawable/ic_menu_compass"
+            android:contentDescription="센서 아이콘"
+            android:tint="#4FC3F7" />
+
+        <TextView
+            android:id="@+id/tvSensorDetected"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/ivSensorIcon"
+            android:layout_marginStart="12dp"
+            android:text="센서 감지됨"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvConnectionSuccess"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:text="연결 성공 ✓"
+            android:textColor="#69F0AE"
+            android:textSize="14sp"
+            android:visibility="invisible" />
+
+    </RelativeLayout>
+
+    <!-- ============================================================
+         체크리스트 (TableLayout)
+         기술스택: TableLayout, CheckBox
+    ============================================================ -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="확인 체크리스트"
+        android:textColor="#4FC3F7"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="12dp" />
+
+    <TableLayout
+        android:id="@+id/tableChecklist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="1"
+        android:layout_marginBottom="20dp">
+
+        <!-- 행 1: 센서 부착 확인 -->
+        <TableRow
+            android:layout_marginBottom="8dp">
+
+            <CheckBox
+                android:id="@+id/cbSensorAttached"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="#4FC3F7"
+                android:layout_marginEnd="12dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="센서 부착 확인"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp" />
+
+        </TableRow>
+
+        <!-- 행 2: 블루투스 연결 확인 -->
+        <TableRow
+            android:layout_marginBottom="8dp">
+
+            <CheckBox
+                android:id="@+id/cbBluetooth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="#4FC3F7"
+                android:layout_marginEnd="12dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="블루투스 연결 확인"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp" />
+
+        </TableRow>
+
+        <!-- 행 3: 앱 권한 확인 -->
+        <TableRow
+            android:layout_marginBottom="8dp">
+
+            <CheckBox
+                android:id="@+id/cbPermission"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="#4FC3F7"
+                android:layout_marginEnd="12dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="앱 권한 확인"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp" />
+
+        </TableRow>
+
+        <!-- 행 4: 피부 접촉 양호 -->
+        <TableRow>
+
+            <CheckBox
+                android:id="@+id/cbSkinContact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="#4FC3F7"
+                android:layout_marginEnd="12dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="피부 접촉 양호"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp" />
+
+        </TableRow>
+
+    </TableLayout>
+
+    <!-- 상태 메시지 텍스트 & 로딩 (자동 전환) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginBottom="16dp">
+
+        <ProgressBar
+            android:id="@+id/progressLoading"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="8dp"
+            android:visibility="gone"
+            android:indeterminateTint="#4FC3F7" />
+
+        <TextView
+            android:id="@+id/tvChecklistStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="자동 점검 대기 중..."
+            android:textColor="#FFA726"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <!-- 공간 채우기 -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <!-- 다음으로 버튼 -->
+    <Button
+        android:id="@+id/btnSensorNext"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:text="다음으로 →"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:backgroundTint="#1565C0"
+        android:layout_marginBottom="16dp" />
+
+</LinearLayout>

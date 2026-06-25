@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    파형 데이터 레이아웃 (Velocity Waveform)
+    기술스택: RadioButton (Live/Static 탭), GridLayout (수치 2열),
+              ScrollView + TextView (스크롤 설명), ImageView (경고 아이콘),
+              RelativeLayout
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0D1B3E"
+    android:orientation="vertical">
+
+    <!-- 상단 제목 + 경고 아이콘 -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:padding="12dp">
+
+        <TextView
+            android:id="@+id/tvWaveformTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="혈류 파형 (Velocity Waveform)"
+            android:textColor="#4FC3F7"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <!-- 경고 아이콘 ImageView (임계점 초과 시 표시) -->
+        <ImageView
+            android:id="@+id/ivWarningIcon"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@android:drawable/ic_dialog_alert"
+            android:tint="#EF5350"
+            android:contentDescription="위험 경고"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+    <!-- ============================================================
+         Live / Static 탭: RadioButton 2개
+         기술스택: RadioButton
+    ============================================================ -->
+    <RadioGroup
+        android:id="@+id/rgWaveMode"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:orientation="horizontal"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:layout_marginBottom="8dp">
+
+        <RadioButton
+            android:id="@+id/rbLive"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="🔴 LIVE"
+            android:textColor="#FFFFFF"
+            android:buttonTint="#EF5350"
+            android:checked="true"
+            android:gravity="center"
+            android:background="@drawable/radio_tab_bg" />
+
+        <RadioButton
+            android:id="@+id/rbStatic"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="📊 정적 데이터"
+            android:textColor="#FFFFFF"
+            android:buttonTint="#4FC3F7"
+            android:gravity="center"
+            android:background="@drawable/radio_tab_bg" />
+
+    </RadioGroup>
+
+    <!-- 실시간 속도 표시 (LIVE 모드에서만 활성화) -->
+    <TextView
+        android:id="@+id/tvLiveVelocity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="현재 실시간 속도: 62.4 cm/s"
+        android:textColor="#4FC3F7"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="8dp" />
+
+    <!-- 파형 그래프 영역 -->
+    <com.example.healthmonitor.WaveformView
+        android:id="@+id/ivWaveformGraph"
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:background="@drawable/graph_bg"
+        android:padding="8dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="12dp" />
+
+    <!-- 그래프 X/Y 라벨 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:layout_marginBottom="12dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="X: 시간(초)"
+            android:textColor="#546E7A"
+            android:textSize="11sp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Y: 속도(cm/s)"
+            android:textColor="#546E7A"
+            android:textSize="11sp" />
+
+    </LinearLayout>
+
+    <!-- Circulation Status 라벨 -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Circulation Status"
+        android:textColor="#4FC3F7"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:paddingStart="12dp"
+        android:layout_marginBottom="8dp" />
+
+    <!-- ============================================================
+         GridLayout: 수치 목록 2열 배치
+         기술스택: GridLayout
+    ============================================================ -->
+    <GridLayout
+        android:id="@+id/gridWaveData"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="2"
+        android:rowCount="3"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:layout_marginBottom="12dp">
+
+        <!-- 수치 1 -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_columnWeight="1"
+            android:layout_margin="4dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="#1A237E"
+            android:padding="8dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="09:00"
+                android:textColor="#90CAF9"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tvWave1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="60.0"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <!-- 수치 2 -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_columnWeight="1"
+            android:layout_margin="4dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="#1A237E"
+            android:padding="8dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="09:15"
+                android:textColor="#90CAF9"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tvWave2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="62.6"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <!-- 수치 3 -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_columnWeight="1"
+            android:layout_margin="4dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="#1A237E"
+            android:padding="8dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="09:30"
+                android:textColor="#90CAF9"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tvWave3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="58.3"
+                android:textColor="#EF5350"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <!-- 수치 4 -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_columnWeight="1"
+            android:layout_margin="4dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="#1A237E"
+            android:padding="8dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="09:45"
+                android:textColor="#90CAF9"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tvWave4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="65.1"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </GridLayout>
+
+    <!-- ============================================================
+         ScrollView + TextView: 하단 설명 텍스트 (스크롤 가능)
+         기술스택: ScrollView, TextView
+    ============================================================ -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp">
+
+        <TextView
+            android:id="@+id/tvWaveDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="혈류 파형 분석 결과:\n\n측정된 혈류 속도는 정상 범위 내에 있습니다. 파형의 최고점(Peak)은 60~65 cm/s로 측정되었으며, 이는 성인 평균 수치(50~70 cm/s)에 해당합니다.\n\n주의: 09:30 측정값(58.3 cm/s)이 일시적으로 하한선에 근접하였습니다. 지속적으로 낮은 수치가 나타날 경우 의료 전문가와 상담을 권장합니다.\n\n측정 부위: 경동맥 (목 옆 혈관)\n측정 방법: 광학 혈류 측정 (PPG)"
+            android:textColor="#B0BEC5"
+            android:textSize="13sp"
+            android:lineSpacingExtra="4dp"
+            android:padding="8dp"
+            android:background="#0A1228" />
+
+    </ScrollView>
+
+    <!-- 이전/다음 아이콘 버튼 행 -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="4dp">
+
+        <ImageButton
+            android:id="@+id/btnWaveformBack"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_alignParentStart="true"
+            android:background="@drawable/circle_blue_btn"
+            android:contentDescription="이전"
+            android:src="@android:drawable/ic_media_previous"
+            android:tint="#FFFFFF"
+            android:scaleType="center" />
+
+        <ImageButton
+            android:id="@+id/btnWaveformNext"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/circle_blue_btn"
+            android:contentDescription="다음"
+            android:src="@android:drawable/ic_media_next"
+            android:tint="#FFFFFF"
+            android:scaleType="center" />
+
+    </RelativeLayout>
+
+    <!-- 하단 버튼 -->
+    <Button
+        android:id="@+id/btnWaveformToHistory"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_margin="12dp"
+        android:text="데이터 추이 보기 →"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:backgroundTint="#1565C0" />
+
+</LinearLayout>

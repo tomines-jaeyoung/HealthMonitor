@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    실시간 스캔 레이아웃 (3D 인체 Scanning)
+    기술스택: RelativeLayout, Chronometer (경과시간), ToggleButton (Start/Stop),
+              TextView, FrameLayout (3D + 파티클 겹치기)
+-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0D1B3E">
+
+    <!-- 상단: 제목 + 단계 -->
+    <TextView
+        android:id="@+id/tvScanTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="실시간 스캔"
+        android:textColor="#4FC3F7"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvScanStep"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="22dp"
+        android:layout_marginEnd="16dp"
+        android:text="3 / 4"
+        android:textColor="#90CAF9"
+        android:textSize="14sp" />
+
+    <!-- ============================================================
+         Chronometer: 경과 시간 표시
+         기술스택: Chronometer
+    ============================================================ -->
+    <LinearLayout
+        android:id="@+id/layoutTimer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvScanTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="경과: "
+            android:textColor="#90CAF9"
+            android:textSize="16sp" />
+
+        <Chronometer
+            android:id="@+id/chronometerScan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:format="%s" />
+
+    </LinearLayout>
+
+    <!-- scanning... 텍스트 (점 애니메이션용) -->
+    <TextView
+        android:id="@+id/tvScanningText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/layoutTimer"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:text="scanning..."
+        android:textColor="#4FC3F7"
+        android:textSize="16sp"
+        android:textStyle="italic" />
+
+    <!-- ============================================================
+         중앙: FrameLayout으로 3D 인체 이미지 + 스캔 파티클 겹치기
+         기술스택: FrameLayout
+    ============================================================ -->
+    <FrameLayout
+        android:id="@+id/flScanBody"
+        android:layout_width="220dp"
+        android:layout_height="300dp"
+        android:layout_below="@id/tvScanningText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp">
+
+        <!-- 3D 인체 배경 (이미지뷰) -->
+        <ImageView
+            android:id="@+id/ivBodyScan"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/body_scan_bg"
+            android:contentDescription="3D 인체 스캔"
+            android:scaleType="fitCenter" />
+
+        <!-- 스캔 오버레이 (위아래 이동 막대) -->
+        <View
+            android:id="@+id/vBodyScanBar"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#4FC3F7"
+            android:alpha="0.9" />
+
+        <!-- 현재 수치 오버레이 텍스트 -->
+        <TextView
+            android:id="@+id/tvLiveValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="8dp"
+            android:text="-- cm/s"
+            android:textColor="#4FC3F7"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:background="#88000033"
+            android:padding="8dp" />
+
+    </FrameLayout>
+
+    <!-- 현재 측정 수치 크게 표시 -->
+    <TextView
+        android:id="@+id/tvCurrentValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/flScanBody"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:text="혈류 속도: -- cm/s"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp" />
+
+    <!-- ============================================================
+         ToggleButton: 측정 시작/정지
+         기술스택: ToggleButton
+    ============================================================ -->
+    <LinearLayout
+        android:id="@+id/layoutScanButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="32dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="16dp">
+
+        <ToggleButton
+            android:id="@+id/toggleBtnScan"
+            android:layout_width="160dp"
+            android:layout_height="56dp"
+            android:textOn="⏹ 측정 중지"
+            android:textOff="▶ 측정 시작"
+            android:textSize="16sp"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/toggle_btn_bg"
+            android:layout_marginEnd="16dp" />
+
+        <Button
+            android:id="@+id/btnScanNext"
+            android:layout_width="120dp"
+            android:layout_height="56dp"
+            android:text="결과 보기"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:backgroundTint="#1A237E" />
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    메인 대시보드 레이아웃
+    기술스택: RelativeLayout, ViewFlipper, ImageView, TextView, ImageButton, SlidingDrawer
+    ViewFlipper → 파란배경(정상) / 빨간배경(위험) 전환
+    SlidingDrawer → 하단에서 올라오는 사이드 메뉴
+-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000">
+
+    <!-- ============================================================
+         ViewFlipper: 배경 상태 전환 (정상=파랑, 위험=빨강)
+         기술스택: ViewFlipper
+         → inAnimation/outAnimation 제거: Java에서 ValueAnimator로 부드럽게 처리
+    ============================================================ -->
+    <ViewFlipper
+        android:id="@+id/vfBackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- 정상 상태 배경 (파란 그라디언트) -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_gradient_blue" />
+
+        <!-- 위험 상태 배경 (빨간 그라디언트) -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_gradient_red"
+            android:paddingTop="0dp"
+            android:paddingBottom="0dp"
+            android:clipToPadding="false"/>
+
+    </ViewFlipper>
+
+    <!-- ============================================================
+         상단: 앱 제목 + 햄버거 메뉴 아이콘
+         기술스택: TextView, ImageButton
+    ============================================================ -->
+    <TextView
+        android:id="@+id/tvAppTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:text="@string/main_title"
+        android:textColor="#4FC3F7"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:letterSpacing="0.15" />
+
+    <!-- 햄버거 메뉴 버튼 → SlidingDrawer 열기 -->
+    <ImageButton
+        android:id="@+id/btnMenu"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="메뉴 열기"
+        android:src="@android:drawable/ic_menu_sort_by_size"
+        android:tint="#4FC3F7" />
+
+    <!-- ============================================================
+         중앙: 눈동자 영역
+         기술스택: RelativeLayout (중앙 배치), ImageView (눈동자)
+    ============================================================ -->
+    <RelativeLayout
+        android:id="@+id/eyeContainer"
+        android:layout_width="260dp"
+        android:layout_height="140dp"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="80dp"
+        android:background="@android:color/transparent">
+
+        <!-- 왼쪽 눈 흰자 -->
+        <ImageView
+            android:id="@+id/ivLeftEyeWhite"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/circle_white"
+            android:contentDescription="왼쪽 눈" />
+
+        <!-- 왼쪽 눈동자 (터치 따라 움직임) -->
+        <ImageView
+            android:id="@+id/ivLeftPupil"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="30dp"
+            android:background="@drawable/circle_dark_blue"
+            android:contentDescription="왼쪽 눈동자" />
+
+        <!-- 오른쪽 눈 흰자 -->
+        <ImageView
+            android:id="@+id/ivRightEyeWhite"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/circle_white"
+            android:contentDescription="오른쪽 눈" />
+
+        <!-- 오른쪽 눈동자 (터치 따라 움직임) -->
+        <ImageView
+            android:id="@+id/ivRightPupil"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/circle_dark_blue"
+            android:contentDescription="오른쪽 눈동자" />
+
+    </RelativeLayout>
+
+    <!-- ============================================================
+         마지막 측정값 표시
+         기술스택: TextView + OnClickListener
+    ============================================================ -->
+    <TextView
+        android:id="@+id/tvLastMeasureLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/eyeContainer"
+        android:layout_marginTop="6dp"
+        android:text="실시간 측정값"
+        android:textColor="#90CAF9"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/tvLastMeasureValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/tvLastMeasureLabel"
+        android:layout_marginTop="2dp"
+        android:text="125 cm/s — 정상"
+        android:textColor="#FFFFFF"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="4dp" />
+
+    <TextView
+        android:id="@+id/tvStatusLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/tvLastMeasureValue"
+        android:layout_marginTop="2dp"
+        android:text="● 정상"
+        android:textColor="#4FC3F7"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tvStatsLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/tvStatusLabel"
+        android:layout_marginTop="4dp"
+        android:text="최고: - | 최저: - | 평균: -"
+        android:textColor="#BDBDBD"
+        android:textSize="11sp" />
+
+    <!-- ============================================================
+         하단: 측정 시작 레이블 + 버튼 (겹침 방지: alignParentBottom 고정)
+         기술스택: ImageButton
+    ============================================================ -->
+    <LinearLayout
+        android:id="@+id/layoutBottomStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="72dp"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/tvStartLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/start_measure"
+            android:textColor="#4FC3F7"
+            android:textSize="13sp"
+            android:layout_marginBottom="6dp" />
+
+        <ImageButton
+            android:id="@+id/btnStartMeasure"
+            android:layout_width="180dp"
+            android:layout_height="52dp"
+            android:background="@drawable/btn_start_bg"
+            android:contentDescription="측정 시작"
+            android:src="@android:drawable/ic_media_play"
+            android:tint="#FFFFFF"
+            android:scaleType="center" />
+
+    </LinearLayout>
+
+    <!-- ============================================================
+         SlidingDrawer: 하단에서 올라오는 사이드 메뉴
+         기술스택: SlidingDrawer (deprecated but required for assignment)
+    ============================================================ -->
+    <SlidingDrawer
+        android:id="@+id/slidingDrawer"
+        android:layout_width="match_parent"
+        android:layout_height="320dp"
+        android:layout_alignParentBottom="true"
+        android:content="@+id/drawerContent"
+        android:handle="@+id/drawerHandle"
+        android:orientation="vertical">
+
+        <!-- 손잡이 핸들 -->
+        <ImageButton
+            android:id="@id/drawerHandle"
+            android:layout_width="80dp"
+            android:layout_height="32dp"
+            android:background="@drawable/drawer_handle_bg"
+            android:contentDescription="메뉴 핸들"
+            android:src="@android:drawable/ic_menu_sort_by_size"
+            android:tint="#FFFFFF"
+            android:scaleType="center" />
+
+        <!-- 메뉴 내용 -->
+        <LinearLayout
+            android:id="@id/drawerContent"
+            android:layout_width="match_parent"
+            android:layout_height="320dp"
+            android:background="#1A237E"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="📋  메뉴"
+                android:textColor="#4FC3F7"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="12dp" />
+
+            <!-- 메뉴 항목들 -->
+            <TextView
+                android:id="@+id/menuMain"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:gravity="center_vertical"
+                android:text="🏠  메인 화면"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:padding="8dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackground" />
+
+            <TextView
+                android:id="@+id/menuFaceScan"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:gravity="center_vertical"
+                android:text="📷  페이스 스캔"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:padding="8dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackground" />
+
+            <TextView
+                android:id="@+id/menuSensorCheck"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:gravity="center_vertical"
+                android:text="🔌  센서 확인"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:padding="8dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackground" />
+
+            <TextView
+                android:id="@+id/menuBloodFlow"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:gravity="center_vertical"
+                android:text="💉  혈류 측정"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:padding="8dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackground" />
+
+            <TextView
+                android:id="@+id/menuHistory"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:gravity="center_vertical"
+                android:text="📊  데이터 추이"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:padding="8dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackground" />
+
+            <TextView
+                android:id="@+id/menuUserInfo"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:gravity="center_vertical"
+                android:text="👤  사용자 정보"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:padding="8dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackground" />
+
+            <TextView
+                android:id="@+id/menuEmergency"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:gravity="center_vertical"
+                android:text="🚨  긴급 연락처"
+                android:textColor="#EF5350"
+                android:textSize="16sp"
+                android:padding="8dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackground" />
+
+        </LinearLayout>
+    </SlidingDrawer>
+
+</RelativeLayout>

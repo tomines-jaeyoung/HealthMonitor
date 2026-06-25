@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0D1B3E">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal" android:layout_marginBottom="6dp"
+            android:text="긴급 연락처" android:textColor="#EF5350" android:textSize="22sp" android:textStyle="bold"/>
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal" android:layout_marginBottom="20dp"
+            android:text="위험 수치 감지 시 자동으로 알림을 전송합니다."
+            android:textColor="#90CAF9" android:textSize="13sp"/>
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:gravity="center_vertical"
+            android:background="#1A237E" android:padding="14dp" android:layout_marginBottom="12dp">
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:text="위험 수치 자동 알림"
+                android:textColor="#FFFFFF" android:textSize="15sp"/>
+            <Switch android:id="@+id/switchAutoAlert" android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:thumbTint="#4FC3F7" android:trackTint="#1565C0"/>
+        </LinearLayout>
+
+        <TextView android:id="@+id/tvAlertStatus" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="20dp" android:text="● 자동 알림 비활성화"
+            android:textColor="#546E7A" android:textSize="14sp" android:textStyle="bold"/>
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="연락처 1 (필수)" android:textColor="#EF5350"
+            android:textSize="15sp" android:textStyle="bold" android:layout_marginBottom="8dp"/>
+        <EditText android:id="@+id/etContact1Name" android:layout_width="match_parent"
+            android:layout_height="52dp" android:layout_marginBottom="10dp"
+            android:background="@drawable/edit_text_bg" android:hint="이름"
+            android:textColorHint="#546E7A" android:textColor="#FFFFFF"
+            android:textSize="15sp" android:padding="12dp" android:inputType="textPersonName"/>
+        <EditText android:id="@+id/etContact1Phone" android:layout_width="match_parent"
+            android:layout_height="52dp" android:layout_marginBottom="20dp"
+            android:background="@drawable/edit_text_bg" android:hint="전화번호 (010-0000-0000)"
+            android:textColorHint="#546E7A" android:textColor="#FFFFFF"
+            android:textSize="15sp" android:padding="12dp" android:inputType="phone"/>
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="연락처 2 (선택)" android:textColor="#90CAF9"
+            android:textSize="15sp" android:textStyle="bold" android:layout_marginBottom="8dp"/>
+        <EditText android:id="@+id/etContact2Name" android:layout_width="match_parent"
+            android:layout_height="52dp" android:layout_marginBottom="10dp"
+            android:background="@drawable/edit_text_bg" android:hint="이름"
+            android:textColorHint="#546E7A" android:textColor="#FFFFFF"
+            android:textSize="15sp" android:padding="12dp" android:inputType="textPersonName"/>
+        <EditText android:id="@+id/etContact2Phone" android:layout_width="match_parent"
+            android:layout_height="52dp" android:layout_marginBottom="20dp"
+            android:background="@drawable/edit_text_bg" android:hint="전화번호"
+            android:textColorHint="#546E7A" android:textColor="#FFFFFF"
+            android:textSize="15sp" android:padding="12dp" android:inputType="phone"/>
+
+        <TextView android:id="@+id/tvLastAlertTime" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:layout_marginBottom="20dp"
+            android:gravity="center" android:text="마지막 알림: 없음"
+            android:textColor="#546E7A" android:textSize="13sp"/>
+
+        <Button android:id="@+id/btnSaveContacts" android:layout_width="match_parent"
+            android:layout_height="52dp" android:layout_marginBottom="12dp"
+            android:backgroundTint="#1565C0" android:text="저장" android:textColor="#FFFFFF" android:textSize="16sp"/>
+
+        <Button android:id="@+id/btnTestAlert" android:layout_width="match_parent"
+            android:layout_height="52dp" android:layout_marginBottom="12dp"
+            android:backgroundTint="#B71C1C" android:text="⚠ 테스트 알림 전송"
+            android:textColor="#FFFFFF" android:textSize="16sp"/>
+
+        <Button android:id="@+id/btnEmergencyBack" android:layout_width="match_parent"
+            android:layout_height="52dp" android:backgroundTint="#263238"
+            android:text="돌아가기" android:textColor="#FFFFFF" android:textSize="16sp"/>
+
+    </LinearLayout>
+</ScrollView>

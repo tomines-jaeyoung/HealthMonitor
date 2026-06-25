@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0D1B3E">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="24dp"
+            android:text="사용자 정보 입력"
+            android:textColor="#4FC3F7"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="이름" android:textColor="#90CAF9" android:textSize="14sp" android:layout_marginBottom="6dp"/>
+        <EditText android:id="@+id/etName" android:layout_width="match_parent" android:layout_height="52dp"
+            android:layout_marginBottom="16dp" android:background="@drawable/edit_text_bg"
+            android:hint="이름 입력" android:textColorHint="#546E7A" android:textColor="#FFFFFF"
+            android:textSize="16sp" android:padding="12dp" android:inputType="textPersonName"/>
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="나이" android:textColor="#90CAF9" android:textSize="14sp" android:layout_marginBottom="6dp"/>
+        <EditText android:id="@+id/etAge" android:layout_width="match_parent" android:layout_height="52dp"
+            android:layout_marginBottom="16dp" android:background="@drawable/edit_text_bg"
+            android:hint="나이 입력" android:textColorHint="#546E7A" android:textColor="#FFFFFF"
+            android:textSize="16sp" android:padding="12dp" android:inputType="number"/>
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="성별" android:textColor="#90CAF9" android:textSize="14sp" android:layout_marginBottom="6dp"/>
+        <RadioGroup android:id="@+id/rgGender" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginBottom="16dp">
+            <RadioButton android:id="@+id/rbMale" android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:text="남성" android:textColor="#FFFFFF"
+                android:buttonTint="#4FC3F7" android:checked="true"/>
+            <RadioButton android:id="@+id/rbFemale" android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:text="여성" android:textColor="#FFFFFF" android:buttonTint="#F48FB1"/>
+        </RadioGroup>
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="키 (cm)" android:textColor="#90CAF9" android:textSize="14sp" android:layout_marginBottom="6dp"/>
+        <EditText android:id="@+id/etHeight" android:layout_width="match_parent" android:layout_height="52dp"
+            android:layout_marginBottom="16dp" android:background="@drawable/edit_text_bg"
+            android:hint="키 입력" android:textColorHint="#546E7A" android:textColor="#FFFFFF"
+            android:textSize="16sp" android:padding="12dp" android:inputType="numberDecimal"/>
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="몸무게 (kg)" android:textColor="#90CAF9" android:textSize="14sp" android:layout_marginBottom="6dp"/>
+        <EditText android:id="@+id/etWeight" android:layout_width="match_parent" android:layout_height="52dp"
+            android:layout_marginBottom="24dp" android:background="@drawable/edit_text_bg"
+            android:hint="몸무게 입력" android:textColorHint="#546E7A" android:textColor="#FFFFFF"
+            android:textSize="16sp" android:padding="12dp" android:inputType="numberDecimal"/>
+
+        <TextView android:id="@+id/tvNormalRange" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:layout_marginBottom="24dp"
+            android:background="#1A237E" android:gravity="center" android:padding="14dp"
+            android:text="개인화 정상 범위: -- cm/s" android:textColor="#69F0AE"
+            android:textSize="16sp" android:textStyle="bold"/>
+
+        <Button android:id="@+id/btnSaveUserInfo" android:layout_width="match_parent"
+            android:layout_height="52dp" android:layout_marginBottom="12dp"
+            android:backgroundTint="#1565C0" android:text="저장" android:textColor="#FFFFFF" android:textSize="16sp"/>
+
+        <Button android:id="@+id/btnUserInfoNext" android:layout_width="match_parent"
+            android:layout_height="52dp" android:backgroundTint="#0D47A1"
+            android:text="저장 후 측정 시작" android:textColor="#FFFFFF" android:textSize="16sp"/>
+
+    </LinearLayout>
+</ScrollView>

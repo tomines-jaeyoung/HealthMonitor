@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    혈류 측정 레이아웃 (Blood Flow Velocity)
+    기술스택: RelativeLayout, EditText (목표값 입력), ImageButton, ToggleButton,
+              GridLayout (수치 2열), RadioButton (날짜 탭), TextView, FrameLayout
+-->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0D1B3E">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- 상단 제목 + ToggleButton (오름/내림 정렬) -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:id="@+id/tvBloodFlowTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="혈류 속도 측정"
+                android:textColor="#4FC3F7"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <!-- ToggleButton: 오름/내림차순 정렬 -->
+            <ToggleButton
+                android:id="@+id/toggleSort"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:textOn="↑ 오름차순"
+                android:textOff="↓ 내림차순"
+                android:textSize="12sp"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/toggle_small_bg" />
+
+        </RelativeLayout>
+
+        <!-- ============================================================
+             원형 게이지 영역 (FrameLayout)
+             기술스택: FrameLayout, RelativeLayout
+        ============================================================ -->
+        <FrameLayout
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="8dp">
+
+            <!-- 게이지 배경 원 -->
+            <ImageView
+                android:id="@+id/ivGaugeBg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/circle_gauge_bg"
+                android:contentDescription="게이지 배경" />
+
+            <!-- 게이지 채움 (Liquid Fill 효과) -->
+            <ImageView
+                android:id="@+id/ivGaugeFill"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/circle_gauge_fill"
+                android:contentDescription="게이지 채움"
+                android:scaleY="0.6"
+                android:layout_gravity="bottom" />
+
+            <!-- 중앙 수치 텍스트 -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/tvGaugeValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="80"
+                    android:textColor="#FFFFFF"
+                    android:textSize="36sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="cm/s"
+                    android:textColor="#90CAF9"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+        <!-- ============================================================
+             GridLayout: 측정 수치 2열 배치
+             기술스택: GridLayout
+        ============================================================ -->
+        <GridLayout
+            android:id="@+id/gridMeasureValues"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="2"
+            android:rowCount="2"
+            android:layout_marginBottom="8dp">
+
+            <!-- Peak 수치 -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_margin="4dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="#1A237E"
+                android:padding="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Peak (최고)"
+                    android:textColor="#90CAF9"
+                    android:textSize="12sp" />
+
+                <!-- EditText: 목표 Peak 값 직접 입력 가능 -->
+                <EditText
+                    android:id="@+id/etPeakValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="80"
+                    android:textColor="#FFFFFF"
+                    android:textSize="32sp"
+                    android:textStyle="bold"
+                    android:inputType="number"
+                    android:background="@android:color/transparent"
+                    android:gravity="center"
+                    android:minWidth="80dp"
+                    android:hint="--"
+                    android:textColorHint="#555555" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="cm/s"
+                    android:textColor="#90CAF9"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <!-- Mean 수치 -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_margin="4dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="#1A237E"
+                android:padding="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mean (평균)"
+                    android:textColor="#90CAF9"
+                    android:textSize="12sp" />
+
+                <!-- EditText: 목표 Mean 값 직접 입력 가능 -->
+                <EditText
+                    android:id="@+id/etMeanValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="45"
+                    android:textColor="#FFFFFF"
+                    android:textSize="32sp"
+                    android:textStyle="bold"
+                    android:inputType="number"
+                    android:background="@android:color/transparent"
+                    android:gravity="center"
+                    android:minWidth="80dp"
+                    android:hint="--"
+                    android:textColorHint="#555555" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="cm/s"
+                    android:textColor="#90CAF9"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <!-- 현재 속도 -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_margin="4dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="#1A237E"
+                android:padding="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="현재 속도"
+                    android:textColor="#90CAF9"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tvCurrentSpeed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="60"
+                    android:textColor="#4FC3F7"
+                    android:textSize="32sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="cm/s"
+                    android:textColor="#90CAF9"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <!-- 안정성 지수 -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_margin="4dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="#1A237E"
+                android:padding="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="안정성"
+                    android:textColor="#90CAF9"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tvStability"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="양호"
+                    android:textColor="#69F0AE"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="상태"
+                    android:textColor="#90CAF9"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+        </GridLayout>
+
+        <!-- 판정 결과 텍스트 -->
+        <TextView
+            android:id="@+id/tvJudgement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="● 정상 범위"
+            android:textColor="#69F0AE"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
+
+        <!-- ============================================================
+             날짜 탭: RadioButton 그룹
+             기술스택: RadioButton
+        ============================================================ -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="조회 기간"
+                android:textColor="#4FC3F7"
+                android:textSize="12sp"
+                android:layout_marginBottom="4dp" />
+
+            <RadioGroup
+                android:id="@+id/rgDateTab"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rbToday"
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_weight="1"
+                    android:text="오늘"
+                    android:textColor="#FFFFFF"
+                    android:buttonTint="#4FC3F7"
+                    android:checked="true"
+                    android:gravity="center"
+                    android:background="@drawable/radio_tab_bg" />
+
+                <RadioButton
+                    android:id="@+id/rbWeek"
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_weight="1"
+                    android:text="1주일"
+                    android:textColor="#FFFFFF"
+                    android:buttonTint="#4FC3F7"
+                    android:gravity="center"
+                    android:background="@drawable/radio_tab_bg" />
+
+                <RadioButton
+                    android:id="@+id/rbMonth"
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_weight="1"
+                    android:text="1개월"
+                    android:textColor="#FFFFFF"
+                    android:buttonTint="#4FC3F7"
+                    android:gravity="center"
+                    android:background="@drawable/radio_tab_bg" />
+
+            </RadioGroup>
+        </LinearLayout>
+
+        <!-- Flow Stability 그래프 라벨 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="4dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Flow Stability"
+                android:textColor="#90CAF9"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Y: cm/s  |  X: 시간"
+                android:textColor="#546E7A"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <!-- 그래프 영역 (DataGraphView 대체) -->
+        <com.example.healthmonitor.DataGraphView
+            android:id="@+id/ivFlowGraph"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:background="@drawable/graph_bg"
+            android:layout_marginBottom="8dp" />
+
+        <!-- 하단 버튼: ImageButton (다음) -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginBottom="8dp">
+
+            <ImageButton
+                android:id="@+id/btnBloodFlowBack"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_alignParentStart="true"
+                android:background="@drawable/circle_blue_btn"
+                android:contentDescription="이전"
+                android:src="@android:drawable/ic_media_previous"
+                android:tint="#FFFFFF"
+                android:scaleType="center" />
+
+            <ImageButton
+                android:id="@+id/btnBloodFlowNext"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/circle_blue_btn"
+                android:contentDescription="다음"
+                android:src="@android:drawable/ic_media_next"
+                android:tint="#FFFFFF"
+                android:scaleType="center" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+</ScrollView>
