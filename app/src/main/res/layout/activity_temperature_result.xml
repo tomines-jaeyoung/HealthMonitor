@@ -20,8 +20,6 @@
                 <TextView android:id="@+id/tvTempPeak" android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:text="--"
                     android:textColor="#FFFFFF" android:textSize="24sp" android:textStyle="bold"/>
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="°C" android:textColor="#90CAF9" android:textSize="11sp"/>
             </LinearLayout>
             <LinearLayout android:layout_width="0dp" android:layout_height="80dp"
                 android:layout_columnWeight="1" android:layout_margin="4dp"
@@ -31,8 +29,6 @@
                 <TextView android:id="@+id/tvTempMean" android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:text="--"
                     android:textColor="#FFFFFF" android:textSize="24sp" android:textStyle="bold"/>
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="°C" android:textColor="#90CAF9" android:textSize="11sp"/>
             </LinearLayout>
             <LinearLayout android:layout_width="0dp" android:layout_height="80dp"
                 android:layout_columnWeight="1" android:layout_margin="4dp"
