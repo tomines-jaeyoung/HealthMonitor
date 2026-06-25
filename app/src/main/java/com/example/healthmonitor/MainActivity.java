@@ -150,14 +150,32 @@ public class MainActivity extends AppCompatActivity {
 
         // 측정 시작 버튼 → 페이스 스캔으로 이동
         ImageButton btnStart = findViewById(R.id.btnStartMeasure);
-        btnStart.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, FaceScanActivity.class);
-            // 다음 정밀 검사에 반영할 수 있도록 실시간 데이터 전달
-            float avgVal = countVal > 0 ? sumVal / countVal : 0;
-            intent.putExtra("AVG_VAL", avgVal);
-            intent.putExtra("MIN_VAL", minVal);
-            intent.putExtra("MAX_VAL", maxVal);
+        btnStart.setOnClickListener(v -> {            String type = getSharedPreferences("HealthMonitorPrefs", MODE_PRIVATE)
+                    .getString("selected_measure_type", "blood_flow");
+            Intent intent;
+            switch (type) {
+                case "heart_rate":
+                    intent = new Intent(MainActivity.this, HeartRateActivity.class); break;
+                case "spo2":
+                    intent = new Intent(MainActivity.this, SpO2Activity.class); break;
+                case "temperature":
+                    intent = new Intent(MainActivity.this, TemperatureActivity.class); break;
+                default:
+                    intent = new Intent(MainActivity.this, FaceScanActivity.class);
+                    float avgVal = countVal > 0 ? sumVal / countVal : 0;
+                    intent.putExtra("AVG_VAL", avgVal);
+                    intent.putExtra("MIN_VAL", minVal);
+                    intent.putExtra("MAX_VAL", maxVal);
+                    break;
+            }
             startActivity(intent);
+            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        });
+
+        // 항목 변경 버튼
+        TextView btnChangeItem = findViewById(R.id.btnChangeItem);
+        btnChangeItem.setOnClickListener(v -> {
+            startActivity(new Intent(MainActivity.this, MeasurementSelectActivity.class));
             overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         });
 
@@ -223,6 +241,13 @@ public class MainActivity extends AppCompatActivity {
             slidingDrawer.animateClose();
             startActivity(new Intent(this, EmergencyContactActivity.class));
         });
+
+        TextView menuMeasureSelect = findViewById(R.id.menuMeasureSelect);
+        menuMeasureSelect.setOnClickListener(v -> {
+            slidingDrawer.animateClose();
+            startActivity(new Intent(this, MeasurementSelectActivity.class));
+            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        });
     }
 
     @Override
@@ -240,13 +265,54 @@ public class MainActivity extends AppCompatActivity {
                 isNormal = !isNormal;
             }
 
+            // 선택된 측정 항목 읽기
+            String type = getSharedPreferences("HealthMonitorPrefs", MODE_PRIVATE)
+                    .getString("selected_measure_type", "blood_flow");
+
             float currentVal;
-            if (isNormal) {
+            String unit;
+            float normalMin, normalMax;
+
+            switch (type) {
+                case "heart_rate":
+                    normalMin = 60f; normalMax = 100f;
+                    currentVal = isNormal
+                            ? 60f + random.nextFloat() * 41f   // 60~100 BPM
+                            : random.nextBoolean()
+                                ? 40f + random.nextFloat() * 20f  // 40~59 (서맥)
+                                : 101f + random.nextFloat() * 20f; // 101~120 (빈맥)
+                    unit = " BPM";
+                    break;
+                case "spo2":
+                    normalMin = 95f; normalMax = 100f;
+                    currentVal = isNormal
+                            ? 95f + random.nextFloat() * 5f    // 95~100%
+                            : 88f + random.nextFloat() * 7f;   // 88~94%
+                    unit = "%";
+                    break;
+                case "temperature":
+                    normalMin = 36f; normalMax = 37.5f;
+                    currentVal = isNormal
+                            ? 36f + random.nextFloat() * 1.5f  // 36~37.5°C
+                            : 37.5f + random.nextFloat() * 2f; // 37.5~39.5°C
+                    unit = "°C";
+                    break;
+                default: // blood_flow
+                    normalMin = 100f; normalMax = 120f;
+                    currentVal = isNormal
+                            ? 100f + random.nextFloat() * 21f  // 100~120
+                            : 80f + random.nextFloat() * 20f;  // 80~99
+                    unit = " cm/s";
+                    break;
+            }
+
+            boolean danger = currentVal < normalMin || currentVal > normalMax;
+
+            if (!danger) {
                 vfBackground.setDisplayedChild(0);
                 eyeContainer.setBackgroundColor(0x00000000);
                 tvStatusLabel.setText("● 정상");
                 tvStatusLabel.setTextColor(getColor(android.R.color.holo_blue_light));
-                currentVal = 100f + random.nextFloat() * 21f; // 정상: 100~120
                 getWindow().setStatusBarColor(0xFF0D1B3E);
                 getWindow().setNavigationBarColor(0xFF0D1B3E);
             } else {
@@ -254,7 +320,6 @@ public class MainActivity extends AppCompatActivity {
                 eyeContainer.setBackgroundColor(0x00000000);
                 tvStatusLabel.setText("⚠ 위험");
                 tvStatusLabel.setTextColor(getColor(android.R.color.holo_red_light));
-                currentVal = 80f + random.nextFloat() * 20f; // 위험: 80~99
                 getWindow().setStatusBarColor(0xFF31040E);
                 getWindow().setNavigationBarColor(0xFF31040E);
             }
@@ -265,8 +330,10 @@ public class MainActivity extends AppCompatActivity {
             countVal++;
             float avgVal = sumVal / countVal;
 
-            tvLastMeasureValue.setText(String.format(Locale.KOREA, "%.1f cm/s — %s", currentVal, isNormal ? "정상" : "위험"));
-            tvStatsLabel.setText(String.format(Locale.KOREA, "최고: %.1f | 최저: %.1f | 평균: %.1f", maxVal, minVal, avgVal));
+            tvLastMeasureValue.setText(String.format(Locale.KOREA,
+                    "%.1f%s — %s", currentVal, unit, danger ? "위험" : "정상"));
+            tvStatsLabel.setText(String.format(Locale.KOREA,
+                    "최고: %.1f | 최저: %.1f | 평균: %.1f", maxVal, minVal, avgVal));
 
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREA);
             tvLastMeasureLabel.setText("실시간 측정값 (" + sdf.format(new Date()) + ")");

@@ -126,60 +126,8 @@
     </RelativeLayout>
 
     <!-- ============================================================
-         마지막 측정값 표시
-         기술스택: TextView + OnClickListener
-    ============================================================ -->
-    <TextView
-        android:id="@+id/tvLastMeasureLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/eyeContainer"
-        android:layout_marginTop="6dp"
-        android:text="실시간 측정값"
-        android:textColor="#90CAF9"
-        android:textSize="12sp" />
-
-    <TextView
-        android:id="@+id/tvLastMeasureValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/tvLastMeasureLabel"
-        android:layout_marginTop="2dp"
-        android:text="125 cm/s — 정상"
-        android:textColor="#FFFFFF"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:clickable="true"
-        android:focusable="true"
-        android:padding="4dp" />
-
-    <TextView
-        android:id="@+id/tvStatusLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/tvLastMeasureValue"
-        android:layout_marginTop="2dp"
-        android:text="● 정상"
-        android:textColor="#4FC3F7"
-        android:textSize="14sp" />
-
-    <TextView
-        android:id="@+id/tvStatsLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/tvStatusLabel"
-        android:layout_marginTop="4dp"
-        android:text="최고: - | 최저: - | 평균: -"
-        android:textColor="#BDBDBD"
-        android:textSize="11sp" />
-
-    <!-- ============================================================
-         하단: 측정 시작 레이블 + 버튼 (겹침 방지: alignParentBottom 고정)
-         기술스택: ImageButton
+         중앙 하단: 실시간 측정값 및 통계 표시 & 측정 시작 버튼 레이아웃
+         기술스택: LinearLayout (세로 배치, 정렬 겹침 방지)
     ============================================================ -->
     <LinearLayout
         android:id="@+id/layoutBottomStart"
@@ -187,10 +135,52 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="72dp"
+        android:layout_marginBottom="60dp"
         android:orientation="vertical"
         android:gravity="center">
 
+        <!-- 마지막 측정값 표시 -->
+        <TextView
+            android:id="@+id/tvLastMeasureLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="실시간 측정값"
+            android:textColor="#90CAF9"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tvLastMeasureValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="125 cm/s — 정상"
+            android:textColor="#FFFFFF"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="4dp" />
+
+        <TextView
+            android:id="@+id/tvStatusLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="● 정상"
+            android:textColor="#4FC3F7"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tvStatsLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="24dp"
+            android:text="최고: - | 최저: - | 평균: -"
+            android:textColor="#BDBDBD"
+            android:textSize="11sp" />
+
+        <!-- 측정 시작 버튼 영역 -->
         <TextView
             android:id="@+id/tvStartLabel"
             android:layout_width="wrap_content"
@@ -210,6 +200,18 @@
             android:tint="#FFFFFF"
             android:scaleType="center" />
 
+        <TextView
+            android:id="@+id/btnChangeItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="⇄ 항목 변경"
+            android:textColor="#90CAF9"
+            android:textSize="13sp"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="8dp" />
+
     </LinearLayout>
 
     <!-- ============================================================
@@ -219,7 +221,7 @@
     <SlidingDrawer
         android:id="@+id/slidingDrawer"
         android:layout_width="match_parent"
-        android:layout_height="320dp"
+        android:layout_height="480dp"
         android:layout_alignParentBottom="true"
         android:content="@+id/drawerContent"
         android:handle="@+id/drawerHandle"
@@ -240,7 +242,7 @@
         <LinearLayout
             android:id="@id/drawerContent"
             android:layout_width="match_parent"
-            android:layout_height="320dp"
+            android:layout_height="480dp"
             android:background="#1A237E"
             android:orientation="vertical"
             android:padding="16dp">
@@ -340,6 +342,19 @@
                 android:gravity="center_vertical"
                 android:text="🚨  긴급 연락처"
                 android:textColor="#EF5350"
+                android:textSize="16sp"
+                android:padding="8dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackground" />
+
+            <TextView
+                android:id="@+id/menuMeasureSelect"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:gravity="center_vertical"
+                android:text="⚡  항목별 측정"
+                android:textColor="#69F0AE"
                 android:textSize="16sp"
                 android:padding="8dp"
                 android:clickable="true"

@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0D1B3E"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- 상단 타이틀 -->
+    <TextView
+        android:id="@+id/tvFullTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="종합 전체 측정"
+        android:textColor="#4FC3F7"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <!-- 4분할 화면 (GridLayout) -->
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:columnCount="2"
+        android:rowCount="2"
+        android:alignmentMode="alignBounds"
+        android:columnOrderPreserved="false">
+
+        <!-- 1. 혈류 속도 (왼쪽 위) - activity_blood_flow 원형 게이지 및 상태 싱크 -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="8dp"
+            android:background="#0D1B3E"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="12dp">
+
+            <TextView
+                android:id="@+id/tvFullBloodFlowTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="혈류 속도 측정"
+                android:textColor="#4FC3F7"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
+
+            <FrameLayout
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="4dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/circle_gauge_bg"
+                    android:contentDescription="게이지 배경" />
+
+                <ImageView
+                    android:id="@+id/ivGaugeFill"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/circle_gauge_fill"
+                    android:contentDescription="게이지 채움"
+                    android:scaleY="0.0"
+                    android:layout_gravity="bottom" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/tvFullBloodFlow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="cm/s"
+                        android:textColor="#90CAF9"
+                        android:textSize="11sp" />
+
+                </LinearLayout>
+
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/tvFullBloodFlowStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="측정 대기 중"
+                android:textColor="#90CAF9"
+                android:textSize="12sp"
+                android:layout_marginTop="4dp" />
+
+        </LinearLayout>
+
+        <!-- 2. 심박수 (오른쪽 위) - activity_heart_rate 심장 아이콘 및 상태 싱크 -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="8dp"
+            android:background="@drawable/bg_gradient_blue"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="12dp">
+
+            <TextView
+                android:id="@+id/tvFullHeartRateTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="심박수 측정"
+                android:textColor="#4FC3F7"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
+
+            <ImageView
+                android:id="@+id/ivFullHeart"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@android:drawable/ic_media_play"
+                android:tint="#EF5350"
+                android:layout_marginBottom="4dp"/>
+
+            <TextView
+                android:id="@+id/tvFullHeartRate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="--"
+                android:textColor="#4FC3F7"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BPM"
+                android:textColor="#90CAF9"
+                android:textSize="11sp" />
+
+            <TextView
+                android:id="@+id/tvFullHeartRateStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="측정 대기 중"
+                android:textColor="#90CAF9"
+                android:textSize="12sp"
+                android:layout_marginTop="4dp" />
+
+        </LinearLayout>
+
+        <!-- 3. 체온 (왼쪽 아래) - activity_temperature 체온계 및 상태 싱크 -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="8dp"
+            android:background="@drawable/bg_gradient_blue"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="12dp">
+
+            <TextView
+                android:id="@+id/tvFullTempTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="체온 측정"
+                android:textColor="#4FC3F7"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:id="@+id/tvThermometerIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🌡"
+                android:textColor="#4FC3F7"
+                android:textSize="20sp"
+                android:layout_marginBottom="4dp" />
+
+            <TextView
+                android:id="@+id/tvFullTemp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="--.-°C"
+                android:textColor="#4FC3F7"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvFullTempStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="측정 대기 중"
+                android:textColor="#90CAF9"
+                android:textSize="12sp"
+                android:layout_marginTop="4dp" />
+
+        </LinearLayout>
+
+        <!-- 4. 산소포화도 (오른쪽 아래) - activity_spo2 가로 프로그레스바 및 상태 싱크 -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="8dp"
+            android:background="@drawable/bg_gradient_blue"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="12dp">
+
+            <TextView
+                android:id="@+id/tvFullSpO2Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="산소포화도 측정"
+                android:textColor="#4FC3F7"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:id="@+id/tvFullSpO2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="--.-%"
+                android:textColor="#4FC3F7"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="4dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SpO₂"
+                android:textColor="#90CAF9"
+                android:textSize="11sp"
+                android:layout_marginBottom="4dp" />
+
+            <ProgressBar
+                android:id="@+id/progressSpO2"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:progress="0"
+                android:progressTint="#4FC3F7"
+                android:progressBackgroundTint="#1A237E"
+                android:layout_marginBottom="4dp" />
+
+            <TextView
+                android:id="@+id/tvFullSpO2Status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="측정 대기 중"
+                android:textColor="#90CAF9"
+                android:textSize="12sp"
+                android:layout_marginTop="4dp" />
+
+        </LinearLayout>
+
+    </GridLayout>
+
+    <!-- 하단 제어부 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp">
+
+        <TextView
+            android:id="@+id/tvFullStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="측정 버튼을 누르면 4가지 항목을 동시에 스캔합니다."
+            android:textColor="#BDBDBD"
+            android:textSize="13sp"
+            android:layout_marginBottom="12dp" />
+
+        <Button
+            android:id="@+id/btnFullAction"
+            android:layout_width="220dp"
+            android:layout_height="54dp"
+            android:text="종합 측정 시작"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:backgroundTint="#1565C0"
+            android:stateListAnimator="@null" />
+
+    </LinearLayout>
+
+</LinearLayout>

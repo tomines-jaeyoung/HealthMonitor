@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="#0D1B3E">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="vertical" android:padding="16dp">
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal" android:layout_marginTop="12dp"
+            android:layout_marginBottom="16dp" android:text="심박수 측정 결과"
+            android:textColor="#4FC3F7" android:textSize="20sp" android:textStyle="bold"/>
+
+        <GridLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:columnCount="2" android:layout_marginBottom="12dp">
+            <LinearLayout android:layout_width="0dp" android:layout_height="80dp"
+                android:layout_columnWeight="1" android:layout_margin="4dp"
+                android:background="#1A237E" android:orientation="vertical" android:gravity="center">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Peak (최고)" android:textColor="#90CAF9" android:textSize="12sp"/>
+                <TextView android:id="@+id/tvHRPeak" android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:text="--"
+                    android:textColor="#FFFFFF" android:textSize="24sp" android:textStyle="bold"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="BPM" android:textColor="#90CAF9" android:textSize="11sp"/>
+            </LinearLayout>
+            <LinearLayout android:layout_width="0dp" android:layout_height="80dp"
+                android:layout_columnWeight="1" android:layout_margin="4dp"
+                android:background="#1A237E" android:orientation="vertical" android:gravity="center">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Mean (평균)" android:textColor="#90CAF9" android:textSize="12sp"/>
+                <TextView android:id="@+id/tvHRMean" android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:text="--"
+                    android:textColor="#FFFFFF" android:textSize="24sp" android:textStyle="bold"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="BPM" android:textColor="#90CAF9" android:textSize="11sp"/>
+            </LinearLayout>
+            <LinearLayout android:layout_width="0dp" android:layout_height="80dp"
+                android:layout_columnWeight="1" android:layout_margin="4dp"
+                android:background="#1A237E" android:orientation="vertical" android:gravity="center">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="현재 심박수" android:textColor="#90CAF9" android:textSize="12sp"/>
+                <TextView android:id="@+id/tvHRCurrent" android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:text="--"
+                    android:textColor="#4FC3F7" android:textSize="20sp" android:textStyle="bold"/>
+            </LinearLayout>
+            <LinearLayout android:layout_width="0dp" android:layout_height="80dp"
+                android:layout_columnWeight="1" android:layout_margin="4dp"
+                android:background="#1A237E" android:orientation="vertical" android:gravity="center">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="안정성" android:textColor="#90CAF9" android:textSize="12sp"/>
+                <TextView android:id="@+id/tvHRStability" android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:text="--"
+                    android:textColor="#69F0AE" android:textSize="20sp" android:textStyle="bold"/>
+            </LinearLayout>
+        </GridLayout>
+
+        <TextView android:id="@+id/tvHRJudgement" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:gravity="center"
+            android:padding="12dp" android:layout_marginBottom="12dp"
+            android:text="● 정상 범위" android:textColor="#69F0AE"
+            android:textSize="16sp" android:textStyle="bold"/>
+
+        <com.example.healthmonitor.DataGraphView
+            android:id="@+id/hrGraphView" android:layout_width="match_parent"
+            android:layout_height="160dp" android:layout_marginBottom="16dp"
+            android:background="@drawable/graph_bg"/>
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:layout_marginBottom="16dp">
+            <Button android:id="@+id/btnHRBack" android:layout_width="0dp"
+                android:layout_height="52dp" android:layout_weight="1" android:layout_marginEnd="8dp"
+                android:backgroundTint="#263238" android:text="돌아가기"
+                android:textColor="#FFFFFF" android:stateListAnimator="@null"/>
+            <Button android:id="@+id/btnHRNext" android:layout_width="0dp"
+                android:layout_height="52dp" android:layout_weight="1"
+                android:backgroundTint="#1565C0" android:text="데이터 추이 →"
+                android:textColor="#FFFFFF" android:stateListAnimator="@null"/>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

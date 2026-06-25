@@ -1,6 +1,8 @@
 package com.example.healthmonitor;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -39,6 +41,12 @@ public class HistoryActivity extends AppCompatActivity {
 
     private android.widget.TableLayout tableHistory;
     private Date currentBaseDate;
+
+    // 전체측정 리포트 관련 뷰
+    private android.widget.ScrollView scrollReport;
+    private android.widget.ScrollView scrollTableHistory;
+    private android.widget.LinearLayout layoutFilter;
+    private TextView tvReportBloodFlow, tvReportHeartRate, tvReportTemp, tvReportSpO2;
 
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREA);
     private SimpleDateFormat monthFmt = new SimpleDateFormat("yyyy-MM", Locale.KOREA);
@@ -84,6 +92,15 @@ public class HistoryActivity extends AppCompatActivity {
 
         tableHistory = findViewById(R.id.tableHistory);
 
+        // 전체측정 리포트 관련 뷰 초기화
+        scrollReport       = findViewById(R.id.scrollReport);
+        scrollTableHistory = findViewById(R.id.scrollTableHistory);
+        layoutFilter       = findViewById(R.id.layoutFilter);
+        tvReportBloodFlow  = findViewById(R.id.tvReportBloodFlow);
+        tvReportHeartRate  = findViewById(R.id.tvReportHeartRate);
+        tvReportTemp       = findViewById(R.id.tvReportTemp);
+        tvReportSpO2       = findViewById(R.id.tvReportSpO2);
+
         // 미래 날짜 선택 차단
         calendarView.setMaxDate(System.currentTimeMillis());
 
@@ -127,7 +144,7 @@ public class HistoryActivity extends AppCompatActivity {
         }
     }
 
-    private android.widget.TableRow createTableRow(String dateStr, int value, boolean isDanger) {
+    private android.widget.TableRow createTableRow(String dateStr, double value, boolean isDanger, String type) {
         android.widget.TableRow row = new android.widget.TableRow(this);
         android.widget.TableRow.LayoutParams rowParams = new android.widget.TableRow.LayoutParams(
                 android.widget.TableRow.LayoutParams.MATCH_PARENT,
@@ -171,7 +188,23 @@ public class HistoryActivity extends AppCompatActivity {
                 android.widget.TableRow.LayoutParams.WRAP_CONTENT,
                 android.widget.TableRow.LayoutParams.WRAP_CONTENT
         ));
-        tvValue.setText(value + " cm/s");
+        
+        String formattedVal;
+        switch (type) {
+            case "heart_rate":
+                formattedVal = String.format(Locale.KOREA, "%.0f BPM", value);
+                break;
+            case "spo2":
+                formattedVal = String.format(Locale.KOREA, "%.0f%%", value);
+                break;
+            case "temperature":
+                formattedVal = String.format(Locale.KOREA, "%.1f°C", value);
+                break;
+            default: // blood_flow
+                formattedVal = String.format(Locale.KOREA, "%.0f cm/s", value);
+                break;
+        }
+        tvValue.setText(formattedVal);
         tvValue.setTextColor(isDanger ? 0xFFEF5350 : 0xFFFFFFFF);
         tvValue.setTextSize(13);
         if (isDanger) {
@@ -216,6 +249,33 @@ public class HistoryActivity extends AppCompatActivity {
             tableHistory.removeViews(1, childCount - 1);
         }
 
+        // 선택된 측정 항목 읽기
+        String type = getSharedPreferences("HealthMonitorPrefs", MODE_PRIVATE)
+                .getString("selected_measure_type", "blood_flow");
+
+        if ("all".equals(type)) {
+            actSearchDate.setVisibility(View.GONE);
+            layoutFilter.setVisibility(View.GONE);
+            calendarView.setVisibility(View.GONE);
+            scrollTableHistory.setVisibility(View.GONE);
+            scrollReport.setVisibility(View.VISIBLE);
+            if (btnHistoryToMain != null) {
+                btnHistoryToMain.setText("측정 항목 선택으로 돌아가기");
+            }
+
+            displayHealthReport();
+            return;
+        } else {
+            actSearchDate.setVisibility(View.VISIBLE);
+            layoutFilter.setVisibility(View.VISIBLE);
+            calendarView.setVisibility(View.VISIBLE);
+            scrollTableHistory.setVisibility(View.VISIBLE);
+            scrollReport.setVisibility(View.GONE);
+            if (btnHistoryToMain != null) {
+                btnHistoryToMain.setText("상세 건강 리포트 확인");
+            }
+        }
+
         Calendar cal = Calendar.getInstance();
         cal.setTime(currentBaseDate);
         int year = cal.get(Calendar.YEAR);
@@ -229,7 +289,7 @@ public class HistoryActivity extends AppCompatActivity {
 
         List<Date> datesToShow = new ArrayList<>();
         List<Boolean> isDangerList = new ArrayList<>();
-        List<Integer> valuesToShow = new ArrayList<>();
+        List<Double> valuesToShow = new ArrayList<>();
 
         if (cbDangerFilter.isChecked()) {
             // 해당 월의 위험일 5개 가져오기
@@ -250,7 +310,27 @@ public class HistoryActivity extends AppCompatActivity {
                     String dateStr = sdf.format(checkCal.getTime());
                     long seed = dateStr.hashCode();
                     Random r = new Random(seed);
-                    valuesToShow.add(80 + r.nextInt(20));
+                    
+                    double val;
+                    switch (type) {
+                        case "heart_rate":
+                            // 위험 심박수 (서맥 40~59 또는 빈맥 101~120)
+                            val = r.nextBoolean() ? 40 + r.nextInt(20) : 101 + r.nextInt(20);
+                            break;
+                        case "spo2":
+                            // 위험 산소포화도 (88~94%)
+                            val = 88 + r.nextInt(7);
+                            break;
+                        case "temperature":
+                            // 위험 체온 (37.5~39.5°C)
+                            val = 37.5 + r.nextDouble() * 2.0;
+                            break;
+                        default: // blood_flow
+                            // 위험 혈류속도 (80~99 cm/s)
+                            val = 80 + r.nextInt(20);
+                            break;
+                    }
+                    valuesToShow.add(val);
                 }
             }
         } else {
@@ -266,7 +346,44 @@ public class HistoryActivity extends AppCompatActivity {
 
                     long seed = dateStr.hashCode();
                     Random r = new Random(seed);
-                    valuesToShow.add(isDanger ? 80 + r.nextInt(20) : 100 + r.nextInt(21));
+                    
+                    double val;
+                    if (isDanger) {
+                        switch (type) {
+                            case "heart_rate":
+                                val = r.nextBoolean() ? 40 + r.nextInt(20) : 101 + r.nextInt(20);
+                                break;
+                            case "spo2":
+                                val = 88 + r.nextInt(7);
+                                break;
+                            case "temperature":
+                                val = 37.5 + r.nextDouble() * 2.0;
+                                break;
+                            default: // blood_flow
+                                val = 80 + r.nextInt(20);
+                                break;
+                        }
+                    } else {
+                        switch (type) {
+                            case "heart_rate":
+                                // 정상 심박수 (60~100 BPM)
+                                val = 60 + r.nextInt(41);
+                                break;
+                            case "spo2":
+                                // 정상 산소포화도 (95~100%)
+                                val = 95 + r.nextInt(6);
+                                break;
+                            case "temperature":
+                                // 정상 체온 (36.0~37.4°C)
+                                val = 36.0 + r.nextDouble() * 1.4;
+                                break;
+                            default: // blood_flow
+                                // 정상 혈류속도 (100~120 cm/s)
+                                val = 100 + r.nextInt(21);
+                                break;
+                        }
+                    }
+                    valuesToShow.add(val);
 
                     addedCount++;
                 }
@@ -278,8 +395,8 @@ public class HistoryActivity extends AppCompatActivity {
         for (int i = 0; i < datesToShow.size(); i++) {
             String dateStr = sdf.format(datesToShow.get(i));
             boolean isDanger = isDangerList.get(i);
-            int value = valuesToShow.get(i);
-            android.widget.TableRow row = createTableRow(dateStr, value, isDanger);
+            double value = valuesToShow.get(i);
+            android.widget.TableRow row = createTableRow(dateStr, value, isDanger, type);
             tableHistory.addView(row);
         }
 
@@ -351,11 +468,17 @@ public class HistoryActivity extends AppCompatActivity {
         });
 
         btnHistoryToMain.setOnClickListener(v -> {
-            android.content.Intent intent = new android.content.Intent(
-                    HistoryActivity.this, MainActivity.class);
+            String type = getSharedPreferences("HealthMonitorPrefs", MODE_PRIVATE)
+                    .getString("selected_measure_type", "blood_flow");
+            android.content.Intent intent;
+            if ("all".equals(type)) {
+                intent = new android.content.Intent(HistoryActivity.this, MeasurementSelectActivity.class);
+            } else {
+                intent = new android.content.Intent(HistoryActivity.this, IndividualReportActivity.class);
+            }
             intent.addFlags(android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         });
     }
 
@@ -398,5 +521,53 @@ public class HistoryActivity extends AppCompatActivity {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+    }
+
+    private void displayHealthReport() {
+        SharedPreferences p = getSharedPreferences("HealthMonitorPrefs", MODE_PRIVATE);
+        float bloodFlow = p.getFloat("all_blood_flow", 110.0f);
+        float heartRate = p.getFloat("all_heart_rate", 75.0f);
+        float temp = p.getFloat("all_temp", 36.6f);
+        float spo2 = p.getFloat("all_spo2", 98.0f);
+
+        // 1. Blood Flow opinion
+        String bloodFlowOpinion;
+        if (bloodFlow >= 100f && bloodFlow <= 120f) {
+            bloodFlowOpinion = "정상 범위입니다. 건강한 혈액 순환 상태를 유지하기 위해 규칙적인 유산소 운동과 충분한 수분 섭취";
+        } else {
+            bloodFlowOpinion = "정상 범위를 벗어났습니다. 식습관 개선(저염식)과 무리한 운동 자제가 필요하며 전문 의료진과의 상담";
+        }
+        tvReportBloodFlow.setText(String.format(Locale.KOREA, 
+                "현재 혈류속도는 %.0f cm/s 이며, %s이 권장됩니다.", bloodFlow, bloodFlowOpinion));
+
+        // 2. Heart Rate opinion
+        String heartRateOpinion;
+        if (heartRate >= 60f && heartRate <= 100f) {
+            heartRateOpinion = "안정적입니다. 유산소 운동을 통해 적절한 심폐 지구력을 꾸준히 유지하는 것";
+        } else {
+            heartRateOpinion = "비정상(서맥 혹은 빈맥) 상태입니다. 가슴 두근거림이나 어지러움 증상이 있을 수 있으므로 충분한 안정을 취하고 정밀 심전도 검사";
+        }
+        tvReportHeartRate.setText(String.format(Locale.KOREA, 
+                "현재 심박수는 %.0f BPM 이며, %s이 권장됩니다.", heartRate, heartRateOpinion));
+
+        // 3. Temp opinion
+        String tempOpinion;
+        if (temp >= 36.0f && temp <= 37.4f) {
+            tempOpinion = "정상 체온입니다. 급격한 외부 온도 변화에 유의하며 면역력을 보존하는 것";
+        } else {
+            tempOpinion = "고열 상태가 의심됩니다. 미온수로 몸을 닦아주거나 해열제를 복용하고 충분한 휴식을 취하는 것이 좋으며, 증상이 지속될 경우 신속한 내원";
+        }
+        tvReportTemp.setText(String.format(Locale.KOREA, 
+                "현재 체온은 %.1f °C 이며, %s이 권장됩니다.", temp, tempOpinion));
+
+        // 4. SpO2 opinion
+        String spo2Opinion;
+        if (spo2 >= 95f && spo2 <= 100f) {
+            spo2Opinion = "매우 안정적입니다. 신체 산소 공급이 원활하므로 현재 상태를 유지하기 위해 맑은 공기를 자주 환기하는 것";
+        } else {
+            spo2Opinion = "정상치 미만(저산소 구간)입니다. 두통이나 호흡 곤란이 발생할 수 있으므로 깊게 숨을 쉬고 즉시 환기가 잘 되는 곳으로 이동하는 것";
+        }
+        tvReportSpO2.setText(String.format(Locale.KOREA, 
+                "현재 산소포화도는 %.0f %% 이며, %s이 권장됩니다.", spo2, spo2Opinion));
     }
 }

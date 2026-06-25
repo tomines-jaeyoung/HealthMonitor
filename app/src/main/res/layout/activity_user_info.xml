@@ -2,76 +2,322 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0D1B3E">
+    android:background="@drawable/bg_gradient_blue">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:padding="28dp">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <!-- 상단 헤더 -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="24dp"
-            android:text="사용자 정보 입력"
-            android:textColor="#4FC3F7"
-            android:textSize="22sp"
-            android:textStyle="bold" />
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="32dp"
+            android:layout_marginTop="16dp">
 
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="이름" android:textColor="#90CAF9" android:textSize="14sp" android:layout_marginBottom="6dp"/>
-        <EditText android:id="@+id/etName" android:layout_width="match_parent" android:layout_height="52dp"
-            android:layout_marginBottom="16dp" android:background="@drawable/edit_text_bg"
-            android:hint="이름 입력" android:textColorHint="#546E7A" android:textColor="#FFFFFF"
-            android:textSize="16sp" android:padding="12dp" android:inputType="textPersonName"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="시작하기"
+                android:textColor="#FFFFFF"
+                android:textSize="26sp"
+                android:textStyle="bold" />
 
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="나이" android:textColor="#90CAF9" android:textSize="14sp" android:layout_marginBottom="6dp"/>
-        <EditText android:id="@+id/etAge" android:layout_width="match_parent" android:layout_height="52dp"
-            android:layout_marginBottom="16dp" android:background="@drawable/edit_text_bg"
-            android:hint="나이 입력" android:textColorHint="#546E7A" android:textColor="#FFFFFF"
-            android:textSize="16sp" android:padding="12dp" android:inputType="number"/>
+            <TextView
+                android:id="@+id/tvStep"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1 / 3"
+                android:textColor="#90CAF9"
+                android:textSize="15sp" />
 
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="성별" android:textColor="#90CAF9" android:textSize="14sp" android:layout_marginBottom="6dp"/>
-        <RadioGroup android:id="@+id/rgGender" android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginBottom="16dp">
-            <RadioButton android:id="@+id/rbMale" android:layout_width="0dp" android:layout_height="wrap_content"
-                android:layout_weight="1" android:text="남성" android:textColor="#FFFFFF"
-                android:buttonTint="#4FC3F7" android:checked="true"/>
-            <RadioButton android:id="@+id/rbFemale" android:layout_width="0dp" android:layout_height="wrap_content"
-                android:layout_weight="1" android:text="여성" android:textColor="#FFFFFF" android:buttonTint="#F48FB1"/>
-        </RadioGroup>
+        </LinearLayout>
 
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="키 (cm)" android:textColor="#90CAF9" android:textSize="14sp" android:layout_marginBottom="6dp"/>
-        <EditText android:id="@+id/etHeight" android:layout_width="match_parent" android:layout_height="52dp"
-            android:layout_marginBottom="16dp" android:background="@drawable/edit_text_bg"
-            android:hint="키 입력" android:textColorHint="#546E7A" android:textColor="#FFFFFF"
-            android:textSize="16sp" android:padding="12dp" android:inputType="numberDecimal"/>
+        <!-- ===== 페이지 1: 이름 / 나이 / 성별 ===== -->
+        <LinearLayout
+            android:id="@+id/page1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="몸무게 (kg)" android:textColor="#90CAF9" android:textSize="14sp" android:layout_marginBottom="6dp"/>
-        <EditText android:id="@+id/etWeight" android:layout_width="match_parent" android:layout_height="52dp"
-            android:layout_marginBottom="24dp" android:background="@drawable/edit_text_bg"
-            android:hint="몸무게 입력" android:textColorHint="#546E7A" android:textColor="#FFFFFF"
-            android:textSize="16sp" android:padding="12dp" android:inputType="numberDecimal"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="이름이 무엇인가요?"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="6dp" />
 
-        <TextView android:id="@+id/tvNormalRange" android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:layout_marginBottom="24dp"
-            android:background="#1A237E" android:gravity="center" android:padding="14dp"
-            android:text="개인화 정상 범위: -- cm/s" android:textColor="#69F0AE"
-            android:textSize="16sp" android:textStyle="bold"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="측정 결과에 이름이 표시됩니다."
+                android:textColor="#90CAF9"
+                android:textSize="13sp"
+                android:layout_marginBottom="16dp" />
 
-        <Button android:id="@+id/btnSaveUserInfo" android:layout_width="match_parent"
-            android:layout_height="52dp" android:layout_marginBottom="12dp"
-            android:backgroundTint="#1565C0" android:text="저장" android:textColor="#FFFFFF" android:textSize="16sp"/>
+            <EditText
+                android:id="@+id/etName"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginBottom="28dp"
+                android:background="@drawable/edit_text_bg"
+                android:hint="홍길동"
+                android:textColorHint="#546E7A"
+                android:textColor="#FFFFFF"
+                android:textSize="17sp"
+                android:padding="14dp"
+                android:inputType="textPersonName" />
 
-        <Button android:id="@+id/btnUserInfoNext" android:layout_width="match_parent"
-            android:layout_height="52dp" android:backgroundTint="#0D47A1"
-            android:text="저장 후 측정 시작" android:textColor="#FFFFFF" android:textSize="16sp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="나이를 알려주세요"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="6dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="나이에 따라 정상 혈류 범위가 달라집니다."
+                android:textColor="#90CAF9"
+                android:textSize="13sp"
+                android:layout_marginBottom="16dp" />
+
+            <EditText
+                android:id="@+id/etAge"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginBottom="28dp"
+                android:background="@drawable/edit_text_bg"
+                android:hint="25"
+                android:textColorHint="#546E7A"
+                android:textColor="#FFFFFF"
+                android:textSize="17sp"
+                android:padding="14dp"
+                android:inputType="number" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="성별을 선택해주세요"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="16dp" />
+
+            <RadioGroup
+                android:id="@+id/rgGender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="40dp">
+
+                <RadioButton
+                    android:id="@+id/rbMale"
+                    android:layout_width="0dp"
+                    android:layout_height="52dp"
+                    android:layout_weight="1"
+                    android:text="남성"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp"
+                    android:buttonTint="#4FC3F7"
+                    android:gravity="center_vertical"
+                    android:checked="true"
+                    android:layout_marginEnd="12dp" />
+
+                <RadioButton
+                    android:id="@+id/rbFemale"
+                    android:layout_width="0dp"
+                    android:layout_height="52dp"
+                    android:layout_weight="1"
+                    android:text="여성"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp"
+                    android:buttonTint="#F48FB1"
+                    android:gravity="center_vertical" />
+
+            </RadioGroup>
+
+            <Button
+                android:id="@+id/btnNext1"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="다음"
+                android:textColor="#FFFFFF"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:backgroundTint="#1565C0"
+                android:stateListAnimator="@null" />
+
+        </LinearLayout>
+
+        <!-- ===== 페이지 2: 키 / 몸무게 ===== -->
+        <LinearLayout
+            android:id="@+id/page2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="키를 입력해주세요"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="6dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="cm 단위로 입력해주세요."
+                android:textColor="#90CAF9"
+                android:textSize="13sp"
+                android:layout_marginBottom="16dp" />
+
+            <EditText
+                android:id="@+id/etHeight"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginBottom="28dp"
+                android:background="@drawable/edit_text_bg"
+                android:hint="170"
+                android:textColorHint="#546E7A"
+                android:textColor="#FFFFFF"
+                android:textSize="17sp"
+                android:padding="14dp"
+                android:inputType="numberDecimal" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="몸무게를 입력해주세요"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="6dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="kg 단위로 입력해주세요."
+                android:textColor="#90CAF9"
+                android:textSize="13sp"
+                android:layout_marginBottom="16dp" />
+
+            <EditText
+                android:id="@+id/etWeight"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginBottom="28dp"
+                android:background="@drawable/edit_text_bg"
+                android:hint="65"
+                android:textColorHint="#546E7A"
+                android:textColor="#FFFFFF"
+                android:textSize="17sp"
+                android:padding="14dp"
+                android:inputType="numberDecimal" />
+
+            <TextView
+                android:id="@+id/tvNormalRange"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="40dp"
+                android:background="#1A237E"
+                android:gravity="center"
+                android:padding="14dp"
+                android:text="맞춤 정상 범위: -- cm/s"
+                android:textColor="#69F0AE"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/btnNext2"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="다음"
+                android:textColor="#FFFFFF"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:backgroundTint="#1565C0"
+                android:stateListAnimator="@null" />
+
+        </LinearLayout>
+
+        <!-- ===== 페이지 3: 긴급 연락처 ===== -->
+        <LinearLayout
+            android:id="@+id/page3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="보호자 연락처"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="6dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="위험 수치 감지 시 알림을 보낼 연락처입니다.\n나중에 설정할 수도 있습니다."
+                android:textColor="#90CAF9"
+                android:textSize="13sp"
+                android:layout_marginBottom="24dp" />
+
+            <EditText
+                android:id="@+id/etContactName"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/edit_text_bg"
+                android:hint="보호자 이름"
+                android:textColorHint="#546E7A"
+                android:textColor="#FFFFFF"
+                android:textSize="17sp"
+                android:padding="14dp"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/etContactPhone"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginBottom="40dp"
+                android:background="@drawable/edit_text_bg"
+                android:hint="010-0000-0000"
+                android:textColorHint="#546E7A"
+                android:textColor="#FFFFFF"
+                android:textSize="17sp"
+                android:padding="14dp"
+                android:inputType="phone" />
+
+            <Button
+                android:id="@+id/btnFinish"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="시작하기"
+                android:textColor="#FFFFFF"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:backgroundTint="#1565C0"
+                android:stateListAnimator="@null" />
+
+        </LinearLayout>
 
     </LinearLayout>
 </ScrollView>

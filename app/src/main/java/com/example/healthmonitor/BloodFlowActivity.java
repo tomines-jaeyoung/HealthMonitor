@@ -51,6 +51,7 @@ public class BloodFlowActivity extends AppCompatActivity {
     
     private int currentMeasuredValue = 80;
     private Random random = new Random();
+    private boolean measureAll = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +63,11 @@ public class BloodFlowActivity extends AppCompatActivity {
         
         // 이전 스캔 화면에서 넘어온 실시간 측정값 받기
         currentMeasuredValue = getIntent().getIntExtra("MEASURED_VALUE", 80);
+        measureAll = getIntent().getBooleanExtra("MEASURE_ALL", false);
+
+        getSharedPreferences("HealthMonitorPrefs", MODE_PRIVATE).edit()
+                .putFloat("last_blood_flow", (float) currentMeasuredValue)
+                .apply();
         
         loadTodayData(currentMeasuredValue);
     }
@@ -127,10 +133,16 @@ public class BloodFlowActivity extends AppCompatActivity {
             }
         });
 
-        // ImageButton: 다음 화면 (파형 데이터)
+        // ImageButton: 다음 화면 (파형 데이터 또는 전체 측정 4분할 화면)
         btnBloodFlowNext.setOnClickListener(v -> {
-            Intent intent = new Intent(BloodFlowActivity.this, WaveformActivity.class);
-            startActivity(intent);
+            if (measureAll) {
+                Intent intent = new Intent(BloodFlowActivity.this, FullMeasureActivity.class);
+                intent.putExtra("MEASURE_ALL", true);
+                startActivity(intent);
+            } else {
+                Intent intent = new Intent(BloodFlowActivity.this, WaveformActivity.class);
+                startActivity(intent);
+            }
             overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         });
 

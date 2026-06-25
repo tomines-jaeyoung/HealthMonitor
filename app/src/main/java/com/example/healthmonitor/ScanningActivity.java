@@ -150,6 +150,7 @@ public class ScanningActivity extends AppCompatActivity {
             }
             Intent intent = new Intent(ScanningActivity.this, BloodFlowActivity.class);
             intent.putExtra("MEASURED_VALUE", lastMeasuredValue); // 인텐트로 데이터 전달
+            intent.putExtra("MEASURE_ALL", getIntent().getBooleanExtra("MEASURE_ALL", false));
             startActivity(intent);
             overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         });

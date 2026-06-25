@@ -143,10 +143,17 @@ public class FaceScanActivity extends AppCompatActivity {
         // 재시도 버튼
         btnRetry.setOnClickListener(v -> resetScan());
 
-        // 완료 버튼 → 센서 확인 화면으로
+        // 완료 버튼 → 센서 확인 화면 또는 전체 종합측정 화면으로
         btnScanComplete.setOnClickListener(v -> {
-            Intent intent = new Intent(FaceScanActivity.this, SensorCheckActivity.class);
-            startActivity(intent);
+            boolean measureAll = getIntent().getBooleanExtra("MEASURE_ALL", false);
+            if (measureAll) {
+                Intent intent = new Intent(FaceScanActivity.this, FullMeasureActivity.class);
+                intent.putExtra("MEASURE_ALL", true);
+                startActivity(intent);
+            } else {
+                Intent intent = new Intent(FaceScanActivity.this, SensorCheckActivity.class);
+                startActivity(intent);
+            }
             overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         });
     }

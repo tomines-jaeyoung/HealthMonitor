@@ -127,6 +127,7 @@ public class SensorCheckActivity extends AppCompatActivity {
     private void navigateToNext() {
         handler.removeCallbacksAndMessages(null);
         Intent intent = new Intent(SensorCheckActivity.this, ScanningActivity.class);
+        intent.putExtra("MEASURE_ALL", getIntent().getBooleanExtra("MEASURE_ALL", false));
         startActivity(intent);
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         finish(); // 자동 전환 후 뒤로가기 시 다시 이 화면이 나오지 않도록 종료

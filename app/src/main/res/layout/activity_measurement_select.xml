@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_gradient_blue">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="6dp"
+            android:text="측정 항목 선택"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="32dp"
+            android:text="측정할 항목을 선택해주세요"
+            android:textColor="#90CAF9"
+            android:textSize="14sp" />
+
+        <!-- 혈류속도 -->
+        <LinearLayout
+            android:id="@+id/cardBloodFlow"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginBottom="14dp"
+            android:background="#1A237E"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="20dp"
+            android:clickable="true"
+            android:focusable="true">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="💉" android:textSize="28sp" android:layout_marginEnd="16dp"/>
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="혈류 속도" android:textColor="#FFFFFF" android:textSize="17sp" android:textStyle="bold"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="정상: 100~120 cm/s" android:textColor="#90CAF9" android:textSize="12sp"/>
+            </LinearLayout>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="›" android:textColor="#4FC3F7" android:textSize="24sp"/>
+        </LinearLayout>
+
+        <!-- 심박수 -->
+        <LinearLayout
+            android:id="@+id/cardHeartRate"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginBottom="14dp"
+            android:background="#1A237E"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="20dp"
+            android:clickable="true"
+            android:focusable="true">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="❤️" android:textSize="28sp" android:layout_marginEnd="16dp"/>
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="심박수" android:textColor="#FFFFFF" android:textSize="17sp" android:textStyle="bold"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="정상: 60~100 BPM" android:textColor="#90CAF9" android:textSize="12sp"/>
+            </LinearLayout>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="›" android:textColor="#4FC3F7" android:textSize="24sp"/>
+        </LinearLayout>
+
+        <!-- 산소포화도 -->
+        <LinearLayout
+            android:id="@+id/cardSpO2"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginBottom="14dp"
+            android:background="#1A237E"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="20dp"
+            android:clickable="true"
+            android:focusable="true">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="🫁" android:textSize="28sp" android:layout_marginEnd="16dp"/>
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="산소포화도" android:textColor="#FFFFFF" android:textSize="17sp" android:textStyle="bold"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="정상: 95~100%" android:textColor="#90CAF9" android:textSize="12sp"/>
+            </LinearLayout>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="›" android:textColor="#4FC3F7" android:textSize="24sp"/>
+        </LinearLayout>
+
+        <!-- 체온 -->
+        <LinearLayout
+            android:id="@+id/cardTemperature"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginBottom="14dp"
+            android:background="#1A237E"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="20dp"
+            android:clickable="true"
+            android:focusable="true">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="🌡" android:textSize="28sp" android:layout_marginEnd="16dp"/>
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="체온" android:textColor="#FFFFFF" android:textSize="17sp" android:textStyle="bold"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="정상: 36~37.5°C" android:textColor="#90CAF9" android:textSize="12sp"/>
+            </LinearLayout>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="›" android:textColor="#4FC3F7" android:textSize="24sp"/>
+        </LinearLayout>
+
+        <!-- 전체 측정 -->
+        <LinearLayout
+            android:id="@+id/cardAll"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginBottom="32dp"
+            android:background="#0D47A1"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="20dp"
+            android:clickable="true"
+            android:focusable="true">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="⚡" android:textSize="28sp" android:layout_marginEnd="16dp"/>
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="전체 측정" android:textColor="#FFFFFF" android:textSize="17sp" android:textStyle="bold"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="심박수 → 산소포화도 → 체온 순서로 측정" android:textColor="#90CAF9" android:textSize="12sp"/>
+            </LinearLayout>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="›" android:textColor="#4FC3F7" android:textSize="24sp"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:backgroundTint="#263238"
+            android:text="돌아가기"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:stateListAnimator="@null" />
+
+    </LinearLayout>
+</ScrollView>
